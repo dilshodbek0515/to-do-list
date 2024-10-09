@@ -9,6 +9,8 @@ function createList(data) {
         coll.firstChild.remove()
     }
     data.forEach(item => {
+        const data = new Date();
+        const sana = data.getHours() + ":" + data.getMinutes();
 
         let div = document.createElement("div")
         let btnDiv = document.createElement("div")
@@ -18,7 +20,7 @@ function createList(data) {
         div.innerHTML = item.title
 
         btn1.innerHTML = `<i class="bi bi-pencil-square"></i> Edit`
-        btn2.innerHTML = `<i class="bi bi-clock"></i> Date`
+        btn2.innerHTML = `<i class="bi bi-clock"></i> ${sana}`
         btn3.innerHTML = `<i class="bi bi-trash3"></i> Delete`
 
         div.className = "list"
@@ -32,7 +34,16 @@ function createList(data) {
         btnDiv.appendChild(btn1)
         btnDiv.appendChild(btn2)
         btnDiv.appendChild(btn3)
+
+        btn3.addEventListener("click", (e) => {
+            e.preventDefault();
+            const agree = confirm("Are you sure to delete this?");
+            if (agree) {
+                div.remove();
+            }
+        });
     })
+
 }
 createList(DATA)
 
@@ -46,7 +57,5 @@ form.addEventListener("submit", e => {
     DATA.push(newTodo)
     localStorage.setItem("data", JSON.stringify(DATA))
     input.value = ""
-
     createList(DATA)
-
 })
